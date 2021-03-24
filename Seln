@@ -1,0 +1,42 @@
+package JavaBasics;
+
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+
+public class Seln {
+
+	public static void main(String[] args) {
+		WebDriver driver;
+	
+		System.setProperty("webdriver.chrome.driver","C:\\Users\\arulj\\chromedriver.exe");
+		driver = new ChromeDriver();
+		driver.get("http://www.htmlcanvasstudio.com/");
+		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+		driver.manage().deleteAllCookies();
+		
+		WebElement drawAline = driver.findElement(By.cssSelector("[title='Draw a line']"));
+		WebElement drawArect = driver.findElement(By.cssSelector("[title='Draw a rectangle']"));
+		WebElement eraser = driver.findElement(By.cssSelector("[title='Use eraser']"));
+		WebElement drawArea = driver.findElement(By.id("container"));
+		
+		drawAline.click();
+		Actions actions = new Actions(driver);
+		actions.clickAndHold(drawArea).moveByOffset(100,25).moveByOffset(100,75).release().click().build().perform();
+		actions.clickAndHold(drawArea).moveByOffset(75,50).moveByOffset(125,50).release().click().build().perform();
+		
+		drawArect.click();
+		actions.clickAndHold(drawArea).moveByOffset(75,75).moveByOffset(125,100).release().click().build().perform();
+	
+		eraser.click();
+		actions.clickAndHold(drawArea).moveByOffset(100,25).moveByOffset(100,75).release().click().build().perform();
+		
+		driver.close();
+		
+	}
+}
